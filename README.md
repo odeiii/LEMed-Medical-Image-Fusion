@@ -1,8 +1,12 @@
 # LEMed - Medical Image Fusion
 
-LEMed is a deep learning model for fusing paired medical images (e.g. PET+MRI, SPECT+MRI) using a learned fusion network trained with a multi-component loss.
+Codes for LEMed: A Low-Light Enhancement Inspired Fusion Network for Multi-Modal Medical Imaging.
 
 > This work is currently under review. A thesis submission is also in progress. Please do not redistribute or build upon this code without permission.
+
+## Abstract
+
+Multi-modal medical image fusion enhances clinical diagnosis by integrating complementary structural and functional information from modalities such as MRI, PET, CT, and SPECT. However, existing deep learning-based fusion approaches often suffer from structural blurring, modality imbalance, and limited cross-modality adaptability. This paper proposes LEMed, a low-light enhancement-inspired fusion network built on a hybrid Transformer-Convolutional Neural Network (T-CNN) backbone. LEMed integrates entropy enhancement, gradient-based texture preservation, and dual-source perceptual alignment within a dynamically weighted multi-loss framework. Fused images are reconstructed in the RGB domain using a luminance-chroma decomposition strategy to improve structural clarity and contrast consistency. Experiments on the Whole Brain Atlas dataset show that LEMed achieves superior performance in Entropy (EN), Mutual Information (MI), and Feature Mutual Information (FMI), while maintaining competitive Peak Signal-to-Noise Ratio (PSNR) and Correlation Coefficient (CC). Additional evaluations further confirm improved edge preservation and perceptual fidelity compared with classical, GAN-based, and recent deep learning baselines. Zero-shot testing on SPECT-MRI and additional validation on the RIRE dataset further demonstrate strong generalization across unseen modality and dataset distributions. These results establish LEMed as a structurally sharp, information-rich, and robust framework for multimodal medical image fusion.
 
 ---
 
@@ -45,7 +49,7 @@ LEMed/
 └── results/                ← fused output images (auto-created by test.py)
 ```
 
-Filenames in `pet/` and `mri/` must match exactly (`001.png` in both) as pairs are matched by filename.
+Filenames in `pet/` and `mri/` must match exactly (eg. `001.png` in both) as pairs are matched by filename.
 
 > **Note:** `data/`, `model/checkpoints/`, and `results/` are excluded from version control (see `.gitignore`). Datasets must be sourced separately. The final model weights (`model/*.pth`) are included in the repo.
 
@@ -150,6 +154,10 @@ If a PET/MRI pair has mismatched sizes, the smaller image is automatically upsca
 ## Model Output
 
 The fused output images are RGB `.png` files. Fusion is performed in YCbCr colour space (only the Y (luminance) channel is passed through the network; the Cb and Cr chrominance channels are carried over from the PET image and recombined with the fused Y before saving). This preserves the colour information of the PET while fusing the structural content of both modalities in luminance.
+
+<img src="images/pet_results.png" width="500"/>
+<img src="images/ct_results.png" width="500"/>
+<img src="images/spect_results.png" width="500"/>
 
 ---
 
