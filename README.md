@@ -45,18 +45,18 @@ Filenames in `pet/` and `mri/` must match exactly (eg. `001.png` in both) as pai
 
 **Python:** 3.10
 
-| Package | Version | Notes |
-|---|---|---|
-| torch | 2.11.0+cu130 | CUDA 13.0 build |
-| torchvision | 0.26.0+cu130 | |
-| numpy | 1.26.4 | |
-| opencv-python | 4.13.0.92 | imported as `cv2` |
-| pillow | 12.1.1 | imported as `PIL` |
-| scikit-image | 0.25.2 | imported as `skimage` |
-| scikit-learn | 1.7.2 | imported as `sklearn` |
-| matplotlib | 3.10.8 | |
-| einops | 0.8.2 | |
-| tqdm | 4.67.3 | |
+| Package | Version |
+|---|---|
+| torch | 2.11.0+cu130 |
+| torchvision | 0.26.0+cu130 |
+| numpy | 1.26.4 |
+| opencv-python | 4.13.0.92 |
+| pillow | 12.1.1 |
+| scikit-image | 0.25.2 |
+| scikit-learn | 1.7.2 |
+| matplotlib | 3.10.8 |
+| einops | 0.8.2 |
+| tqdm | 4.67.3 |
 
 Install all at once:
 ```bash
