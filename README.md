@@ -38,7 +38,7 @@ LEMed/
 Filenames in `pet/` and `mri/` must match exactly (eg. `001.png` in both) as pairs are matched by filename.
 
 > **Note:**
-> Download the datasets [here](https://github.com/odeiii/Medical-Datasets).
+> Download the datasets [here](https://github.com/odeiii/Medical-Datasets) (the PET/CT/SPECTs go into the pet/ folder).
 > The final model weights (`model/*.pth`) are included in the repo.
 > `data/`, `model/checkpoints/`, and `results/` are excluded from version control (see `.gitignore`).
 
