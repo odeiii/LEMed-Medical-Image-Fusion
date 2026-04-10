@@ -144,6 +144,7 @@ The fused output images are RGB `.png` files. Fusion is performed in YCbCr colou
 <img src="images/pet_results.png" width="500"/>
 <img src="images/ct_results.png" width="500"/>
 <img src="images/spect_results.png" width="500"/>
+<img src="images/rire_results.png" width="500"/>
 
 ---
 
