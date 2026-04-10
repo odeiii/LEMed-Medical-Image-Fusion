@@ -8,6 +8,9 @@ Codes for LEMed: A Low-Light Enhancement Inspired Fusion Network for Multi-Modal
 
 Multi-modal medical image fusion enhances clinical diagnosis by integrating complementary structural and functional information from modalities such as MRI, PET, CT, and SPECT. However, existing deep learning-based fusion approaches often suffer from structural blurring, modality imbalance, and limited cross-modality adaptability. This paper proposes LEMed, a low-light enhancement-inspired fusion network built on a hybrid Transformer-Convolutional Neural Network (T-CNN) backbone. LEMed integrates entropy enhancement, gradient-based texture preservation, and dual-source perceptual alignment within a dynamically weighted multi-loss framework. Fused images are reconstructed in the RGB domain using a luminance-chroma decomposition strategy to improve structural clarity and contrast consistency. Experiments on the Whole Brain Atlas dataset show that LEMed achieves superior performance in Entropy (EN), Mutual Information (MI), and Feature Mutual Information (FMI), while maintaining competitive Peak Signal-to-Noise Ratio (PSNR) and Correlation Coefficient (CC). Additional evaluations further confirm improved edge preservation and perceptual fidelity compared with classical, GAN-based, and recent deep learning baselines. Zero-shot testing on SPECT-MRI and additional validation on the RIRE dataset further demonstrate strong generalization across unseen modality and dataset distributions. These results establish LEMed as a structurally sharp, information-rich, and robust framework for multimodal medical image fusion.
 
+<img src="images/framework.png"/>
+<img src="images/tcnn.png"/>
+
 ---
 ## Setup
 ### Directory Convention
