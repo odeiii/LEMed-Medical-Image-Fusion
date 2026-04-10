@@ -88,7 +88,7 @@ All paths and hyperparameters can be overridden at runtime even though defaults 
 
 ```bash
 python run_pipeline.py --lr 1e-4 --num_epochs 30 --k_folds 3
-python test.py --ckpt_path ./model/checkpoints/LEMed_best_fold02.pth
+python test.py --ckpt_path ./model/checkpoints/LEMed_fold02.pth
 ```
 
 ### Run setup check only
