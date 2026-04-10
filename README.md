@@ -9,25 +9,8 @@ Codes for LEMed: A Low-Light Enhancement Inspired Fusion Network for Multi-Modal
 Multi-modal medical image fusion enhances clinical diagnosis by integrating complementary structural and functional information from modalities such as MRI, PET, CT, and SPECT. However, existing deep learning-based fusion approaches often suffer from structural blurring, modality imbalance, and limited cross-modality adaptability. This paper proposes LEMed, a low-light enhancement-inspired fusion network built on a hybrid Transformer-Convolutional Neural Network (T-CNN) backbone. LEMed integrates entropy enhancement, gradient-based texture preservation, and dual-source perceptual alignment within a dynamically weighted multi-loss framework. Fused images are reconstructed in the RGB domain using a luminance-chroma decomposition strategy to improve structural clarity and contrast consistency. Experiments on the Whole Brain Atlas dataset show that LEMed achieves superior performance in Entropy (EN), Mutual Information (MI), and Feature Mutual Information (FMI), while maintaining competitive Peak Signal-to-Noise Ratio (PSNR) and Correlation Coefficient (CC). Additional evaluations further confirm improved edge preservation and perceptual fidelity compared with classical, GAN-based, and recent deep learning baselines. Zero-shot testing on SPECT-MRI and additional validation on the RIRE dataset further demonstrate strong generalization across unseen modality and dataset distributions. These results establish LEMed as a structurally sharp, information-rich, and robust framework for multimodal medical image fusion.
 
 ---
-
-## Repository Structure
-
-```
-LEMed/
-├── net.py              # Model architecture (LEMed + Unet_fuser)
-├── vgg.py              # PerceptualLossVgg16ExDark (required by net.py)
-├── img_utils.py        # Colour-space conversions, filters, Sobel operator
-├── dataset.py          # Patch extraction + HavardDataset loader
-├── losses.py           # L_en, L_tex, L_per, DWA weighting, total loss
-├── train.py            # K-Fold training loop
-├── test.py             # Inference (auto-aligns mismatched image sizes)
-├── setup.py            # Dependency + file check, device/seed config
-└── run_pipeline.py     # End-to-end pipeline runner
-```
-
----
-
-## Directory Convention
+## Setup
+### Directory Convention
 
 The pipeline reads from and writes to fixed directories - no arguments needed:
 
@@ -55,7 +38,7 @@ Filenames in `pet/` and `mri/` must match exactly (eg. `001.png` in both) as pai
 
 ---
 
-## Environment
+### Environment
 
 **Python:** 3.10
 
@@ -134,7 +117,7 @@ By default, test.py loads ./model/LEMed_final.pth. To use a specific checkpoint 
 python test.py --ckpt_path ./model/checkpoints/LEMed_fold02.pth
 ```
 
-If a PET/MRI pair has mismatched sizes, the smaller image is automatically upscaled to match the larger one before fusion.
+If a pair has mismatched sizes, the smaller image is automatically upscaled to match the larger one before fusion.
 
 ---
 
@@ -215,31 +198,9 @@ These values have no bearing on actual training performance. Real loss values du
 
 ## Training Log
 
-Each training run writes `./model/checkpoints/training_log.txt` with a full record of every epoch's train and validation loss, which epoch was saved for each fold, and early stopping events. Example:
-
-```
-LEMed Training Log
-============================================================
-Run started : 2025-05-23 14:02:11
-Device      : cuda
-Dataset     : 1642 pairs
-Epochs      : 50
-LR          : 0.0002
-K-Folds     : 5
-Early stop  : 15
-============================================================
-
------ Fold 1/5 -----
-  Epoch 001/50  |  train: 0.8421  |  val: 0.7913
-  ✓ Checkpoint saved  (epoch 1, val loss 0.7913)
-  Epoch 002/50  |  train: 0.7102  |  val: 0.6887
-  ✓ Checkpoint saved  (epoch 2, val loss 0.6887)
-  ...
-  Best checkpoint: epoch 18  |  val loss 0.3214
-```
+Each training run writes `./model/checkpoints/training_log.txt` with a full record of every epoch's train and validation loss, which epoch was saved for each fold, and early stopping events.
 
 ---
-
 
 ## Citation
 
