@@ -1,4 +1,4 @@
-# LEMed — Medical Image Fusion
+# LEMed - Medical Image Fusion
 
 LEMed is a deep learning model for fusing paired medical images (e.g. PET+MRI, SPECT+MRI) using a learned fusion network trained with a multi-component loss.
 
@@ -25,7 +25,7 @@ LEMed/
 
 ## Directory Convention
 
-The pipeline reads from and writes to fixed directories — no arguments needed:
+The pipeline reads from and writes to fixed directories - no arguments needed:
 
 ```
 LEMed/
@@ -35,7 +35,7 @@ LEMed/
 │   │   └── mri/            ← raw MRI training images (.png)
 │   ├── patches/
 │   │   ├── pet/            ← extracted patches (auto-created)
-│   │   └── mri/            ← auto-created)
+│   │   └── mri/            ← (auto-created)
 │   └── test/
 │       ├── pet/            ← test PET images (.png)
 │       └── mri/            ← test MRI images (.png)
@@ -124,10 +124,10 @@ python train.py
 python test.py
 ```
 
-By default, test.py loads ./model/LEMed_final.pth. To use a specific checkpoint instead — such as a per-fold best or a model trained on a different modality — pass it via --ckpt_path:
+By default, test.py loads ./model/LEMed_final.pth. To use a specific checkpoint instead (such as a per-fold best or a model trained on a different modality), pass it via --ckpt_path
 
 ```bash
-python test.py --ckpt_path ./model/checkpoints/LEMed_best_fold02.pth
+python test.py --ckpt_path ./model/checkpoints/LEMed_fold02.pth
 ```
 
 If a PET/MRI pair has mismatched sizes, the smaller image is automatically upscaled to match the larger one before fusion.
@@ -149,7 +149,7 @@ If a PET/MRI pair has mismatched sizes, the smaller image is automatically upsca
 
 ## Model Output
 
-The fused output images are RGB `.png` files. Fusion is performed in YCbCr colour space — only the Y (luminance) channel is passed through the network; the Cb and Cr chrominance channels are carried over from the PET image and recombined with the fused Y before saving. This preserves the colour information of the PET while fusing the structural content of both modalities in luminance.
+The fused output images are RGB `.png` files. Fusion is performed in YCbCr colour space (only the Y (luminance) channel is passed through the network; the Cb and Cr chrominance channels are carried over from the PET image and recombined with the fused Y before saving). This preserves the colour information of the PET while fusing the structural content of both modalities in luminance.
 
 ---
 
@@ -157,24 +157,49 @@ The fused output images are RGB `.png` files. Fusion is performed in YCbCr colou
 
 | Loss | Description |
 |---|---|
-| L_en | Enhancement loss — promotes detail via histogram equalization of max/min channels |
-| L_tex | Texture loss — per-channel Sobel gradient matching against source images |
-| L_per | Dual perceptual loss — VGG feature matching against both PET and MRI |
+| L_en | Enhancement loss: promotes detail via histogram equalization of max/min channels |
+| L_tex | Texture loss: per-channel Sobel gradient matching against source images |
+| L_per | Dual perceptual loss: VGG feature matching against both PET and MRI |
 | L_total | Weighted sum via Dynamic Weight Averaging (DWA); L_en boosted ×10 |
+
+---
+
+## Pretrained Weights
+
+Pretrained models are available in the [Releases](https://github.com/odeiii/LEMed-Medical-Image-Fusion/releases/tag/ptw) section:
+
+| File | Modality |
+|---|---|
+| `LEMed_pet.pth` | PET-MRI fusion |
+| `LEMed_ct.pth` | CT-MRI fusion |
+
+**To use:**
+1. Download the `.pth` file(s) from the release page
+2. Create a `model/` folder in the project root if it doesn't exist
+3. Place the downloaded `.pth` file(s) inside it
+4. Run inference pointing to the relevant file:
+
+```bash
+# PET-MRI
+python test.py --ckpt_path ./model/LEMed_pet.pth
+
+# CT-MRI
+python test.py --ckpt_path ./model/LEMed_ct.pth
+```
 
 ---
 
 ## Pipeline Smoke Tests
 
-Before training starts, the pipeline runs quick sanity checks on Stages 2–4 using dummy tensors — not real images. This is just to confirm everything loads and runs without errors before committing to a full training run.
+Before training starts, the pipeline runs quick sanity checks on Stages 2–4 using dummy tensors not real images. This is just to confirm everything loads and runs without errors before committing to a full training run.
 
 | Stage | What it checks | What to expect |
 |---|---|---|
-| Stage 2 — img_utils | YCbCr round-trip and Sobelxy gradient on a random tensor | Output shape matches input, values stay in [0, 1] |
-| Stage 4 — L_en | Enhancement loss on two identical random RGB tensors | Small non-zero value |
-| Stage 4 — L_tex | Texture loss on two identical random RGB tensors | Non-zero value |
-| Stage 4 — L_per | Perceptual loss on two identical random tensors | **Always 0.0000** — VGG features are identical when both inputs are the same tensor, so L1 difference is zero. This is expected and not a bug. |
-| Stage 4 — L_total | Combined weighted loss | Non-zero value driven by L_en and L_tex |
+| Stage 2: img_utils | YCbCr round-trip and Sobelxy gradient on a random tensor | Output shape matches input, values stay in [0, 1] |
+| Stage 4: L_en | Enhancement loss on two identical random RGB tensors | Small non-zero value |
+| Stage 4: L_tex | Texture loss on two identical random RGB tensors | Non-zero value |
+| Stage 4: L_per | Perceptual loss on two identical random tensors | **Always 0.0000** .. VGG features are identical when both inputs are the same tensor, so L1 difference is zero. This is expected and not a bug. |
+| Stage 4: L_total | Combined weighted loss | Non-zero value driven by L_en and L_tex |
 
 These values have no bearing on actual training performance. Real loss values during Stage 5 will look very different since PET and MRI images are genuinely different.
 
@@ -206,6 +231,7 @@ Early stop  : 15
 ```
 
 ---
+
 
 ## Citation
 
