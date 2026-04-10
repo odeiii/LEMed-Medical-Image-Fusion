@@ -37,7 +37,10 @@ LEMed/
 
 Filenames in `pet/` and `mri/` must match exactly (eg. `001.png` in both) as pairs are matched by filename.
 
-> **Note:** `data/`, `model/checkpoints/`, and `results/` are excluded from version control (see `.gitignore`). Datasets must be sourced separately. The final model weights (`model/*.pth`) are included in the repo.
+> **Note:**
+> `data/`, `model/checkpoints/`, and `results/` are excluded from version control (see `.gitignore`).
+> Download the datasets from this [link](https://github.com/odeiii/Medical-Datasets).
+> The final model weights (`model/*.pth`) are included in the repo.
 
 ---
 
